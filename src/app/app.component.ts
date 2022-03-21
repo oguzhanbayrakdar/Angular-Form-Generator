@@ -41,6 +41,8 @@ export class AppComponent implements DoCheck{
 
 	htmlOutput = "";
 
+	cssFramework: 'bootstrap' | 'pureCss' = 'pureCss';
+
 	constructor() {
 		// Sets default value
 		this.selectedInputData = this.inputDatas.find(f => f.type == 'text') as InputData
@@ -59,7 +61,7 @@ export class AppComponent implements DoCheck{
 	}
 
 	removeElement(rowIndex:number, elemIndex: number){
-		//Removes element form it's row(array)
+		// Removes element form it's row(array)
 		this.formPlacementData[rowIndex].splice(elemIndex, 1);
 
 		// Remove array from formPlacementData if the array is empty
@@ -70,6 +72,11 @@ export class AppComponent implements DoCheck{
 
 	editElement(rowIndex:number, elemIndex:number){
 
+	}
+
+	addElement(rowIndex: number, elemIndex: number, type: string){
+		let element = this.inputDatas.find(f => f.type == type);
+		this.formPlacementData[rowIndex].splice(elemIndex, 1, element)
 	}
 
 	selectInputType(type: string){

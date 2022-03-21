@@ -24,7 +24,26 @@
 								</ng-container>
 								<div class="element-action-buttons show-on-hover">
 									<button class="btn-sm btn-danger btn mr-2" (click)="removeElement(rowIndex, elemIndex)"><i class="fas fa-trash"></i></button>
-									<button class="btn-sm btn-secondary btn" (click)="editElement(rowIndex, elemIndex)"><i class="fas fa-pen"></i></button>
+									<button class="btn-sm btn-secondary btn" *ngIf="element.icon" (click)="editElement(rowIndex, elemIndex)"><i class="fas fa-pen"></i></button>
+									<div class="btn-group dropright" *ngIf="!element.icon">
+										<button type="button" class="btn btn-secondary btn-sm" data-toggle="dropdown" aria-expanded="false">
+											<i class="fas fa-plus"></i>
+										</button>
+										<div class="dropdown-menu dropdown-multicol">
+											<ng-container *ngFor="let iData of inputDatas; let index = index">
+												<div class="dropdown-col" *ngIf="index % 3 == 0">
+													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+												</div>
+												<div class="dropdown-col" *ngIf="(index - 1) % 3 == 0">
+													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+												</div>
+												<div class="dropdown-col" *ngIf="(index - 2) % 3 == 0">
+													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+												</div>
+											</ng-container>
+										</div>
+									</div>
+									  
 								</div>
 							</div>
 						</div>
@@ -35,44 +54,15 @@
 						</button>	
 					</div>
 				</div>
-
-
-				<!-- <div class="row-wrapper">
-					<div class="row mx-0">
-						<div>
-							<i class="fas fa-phone mr-2"></i>
-							<span>Phone</span>
-						</div>
-						<div>asdasdq1312</div>
-						<div>qweqwe123</div>
-					</div>
-					<button class="btn btn-success">
-						<i class="fas fa-plus"></i>
-					</button>
-				</div>
-				<div class="row-wrapper">
-					<div class="row mx-0">
-						<div>cxzvzxc</div>
-						<div>hjkghj</div>
-					</div>
-					<button class="btn btn-success">
-						<i class="fas fa-plus"></i>
-					</button>
-				</div>
-				<div class="row-wrapper">
-					<div class="row mx-0">
-						<div>uyıoyu</div>
-					</div>
-					<button class="btn btn-success">
-						<i class="fas fa-plus"></i>
-					</button>
-				</div> -->
-				
 			</div>
 			<button class="btn btn-primary btn-block mt-2" (click)="addRowToFormPlacementData()">Add New Row</button>
+
+			<div class="container px-0 mt-5">
+				asdasd
+			</div>
 		</div>
-		<hr>
-		<!-- <div class="new-form-element">
+		<!-- <hr>
+		<div class="new-form-element">
 			<div class="d-flex flex-row justify-content-between align-items-center">
 				<h6>New Element</h6>
 				<button class="btn btn-sm btn-outline-danger"><i class="fas fa-times"></i></button>
@@ -91,9 +81,9 @@
 
 					<div class="dropdown mb-3">
 						<label class="mr-2" for="dropdownMenuButton">Select Input Type: </label>
-						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false"> {{selectedInputType ? selectedInputType.name : 'Select Form Input Type'}} </button>
+						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false"> {{selectedInputData ? selectedInputData.name : 'Select Form Input Type'}} </button>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-							<a class="dropdown-item" href="javascript:void(0)" (click)="selectInputType(iType.type)" *ngFor="let iType of inputTypes">{{iType.name}}</a>
+							<a class="dropdown-item" href="javascript:void(0)" (click)="selectInputType(iType.type)" *ngFor="let iType of inputDatas">{{iType.name}}</a>
 						</div>
 					</div>
 
@@ -107,7 +97,7 @@
 					</div>
 					<div class="form-group">
 						<label for="inputValue">Input Value/Text:</label>
-						<input [type]="selectedInputType.type" [(ngModel)]="inputValue" class="form-control form-control-sm" id="inputValue" name="inputValue" placeholder="Example Input Value/Text: Option1">
+						<input [type]="selectedInputData.type" [(ngModel)]="inputValue" class="form-control form-control-sm" id="inputValue" name="inputValue" placeholder="Example Input Value/Text: Option1">
 					</div>
 				</div>
 				<div class="col-md-6 angular-area">
@@ -153,11 +143,27 @@
 			</div>
 			<hr>
 			<button class="btn btn-success">Save</button>
-		</div> -->
+		</div>  -->
 	</section>
 
 	<section id="preview">
 		<h2 class="header">Form Preview</h2>
+		<p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, enim nesciunt numquam voluptatum sit nemo ea debitis unde magni.</p>
+		<hr>
+		<div class="css-framework">
+			<div class="form-group">
+				<label for="formModelSelection">Select CSS Framework</label>
+				<br>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="pureCss" id="pureCss" value="pureCss">
+					<label class="form-check-label" for="pureCss">Pure CSS</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="bootstrap" id="bootstrap" value="bootstrap">
+					<label class="form-check-label" for="bootstrap">Bootstrap</label>
+				</div>
+			</div>
+		</div>
 		<div class="container bg-light p-3" style="border-radius: 5px;">
 			<div [innerHTML]="htmlOutput | sanitizeHtml"></div>
 		</div>

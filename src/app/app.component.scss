@@ -78,6 +78,14 @@ main{
 						.show-on-hover{
 							display: none;
 						}
+
+						div.dropdown-multicol{
+							width: 30em;
+						}
+						div.dropdown-multicol > div.dropdown-col{
+							display:inline-block;
+							width: 32%;
+						}
 					}
 					.form-element:hover .hide-on-hover{
 						display: none;
@@ -156,6 +164,15 @@ main{
 
 #preview{
 	background-color: $secondary-color;
+	color: $text-color;
+
+	p.description{
+		width: 70%;
+	}
+
+	.container.bg-light{
+		color: #212529;
+	}
 }
 
 .add-btn{
