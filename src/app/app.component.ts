@@ -1,5 +1,5 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { InputType, InputTypes } from './input-types';
+import { Component, DoCheck } from '@angular/core';
+import { InputData, InputDatas } from './input-data';
 
 @Component({
 	selector: 'app-root',
@@ -7,8 +7,23 @@ import { InputType, InputTypes } from './input-types';
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements DoCheck{
-	inputTypes: InputType[] = InputTypes;
-	selectedInputType: InputType | null = null;
+	inputDatas: InputData[] = InputDatas;
+	selectedInputData: InputData;
+
+	formPlacementData: any[][] = [
+		[
+			this.inputDatas[0],
+			this.inputDatas[1],
+		],
+		[
+			this.inputDatas[2],
+		],
+		[
+			this.inputDatas[3],
+			this.inputDatas[4],
+			this.inputDatas[5]
+		],
+	]
 	
 	hasLabel = true;
 	labelText = "Label 1";
@@ -16,7 +31,7 @@ export class AppComponent implements DoCheck{
 
 	inputId = "";
 	inputName = "";
-	inputValue = "TestValue";
+	inputValue = "";
 
 	formModelType: 'selectionNgModel' | 'selectionFormControl' = 'selectionNgModel';
 	ngModelVarName = "";
@@ -27,14 +42,38 @@ export class AppComponent implements DoCheck{
 	htmlOutput = "";
 
 	constructor() {
+		// Sets default value
+		this.selectedInputData = this.inputDatas.find(f => f.type == 'text') as InputData
 	}
 
 	ngDoCheck(): void {
 		this.formatHtmlData();
 	}
 
+	addElementToRow(rowIndex: number){
+		this.formPlacementData[rowIndex].push({})
+	}
+
+	addRowToFormPlacementData(){
+		this.formPlacementData.push([{}])
+	}
+
+	removeElement(rowIndex:number, elemIndex: number){
+		//Removes element form it's row(array)
+		this.formPlacementData[rowIndex].splice(elemIndex, 1);
+
+		// Remove array from formPlacementData if the array is empty
+		if(this.formPlacementData[rowIndex].length < 1){
+			this.formPlacementData.splice(rowIndex, 1)
+		}
+	}
+
+	editElement(rowIndex:number, elemIndex:number){
+
+	}
+
 	selectInputType(type: string){
-		this.selectedInputType = this.inputTypes.find(f => f.type == type) as InputType;
+		this.selectedInputData = this.inputDatas.find(f => f.type == type) as InputData;
 		return;
 	}
 
@@ -43,11 +82,10 @@ export class AppComponent implements DoCheck{
 
 		this.inputOutput = 
 		`<input 
-		type="${this.selectedInputType?.name || ''}"
+		type="${this.selectedInputData?.type || ''}"
 		id="${this.inputId}"
 		name="${this.inputName}"
-		value="${this.inputValue}"
-		placeholder="${this.selectedInputType?.name || ''}"
+		placeholder="${this.selectedInputData?.name || ''}"
 		${this.formModelType == 'selectionNgModel' ? `[(ngModel)]="${this.ngModelVarName}"` : `[formControl]="${this.formControlVarName}"`}
 		>`
 
