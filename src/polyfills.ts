@@ -47,7 +47,9 @@
  */
 import 'zone.js';  // Included with Angular CLI.
 
-
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+// dragula still relies on this.
+(window as any).global = window;

@@ -1,4 +1,5 @@
 import { Component, DoCheck } from '@angular/core';
+import { DragulaService } from 'ng2-dragula';
 import { InputData, InputDatas } from './input-data';
 
 @Component({
@@ -43,13 +44,29 @@ export class AppComponent implements DoCheck{
 
 	cssFramework: 'bootstrap' | 'pureCss' = 'pureCss';
 
-	constructor() {
+	constructor(private dragulaService: DragulaService) {
 		// Sets default value
 		this.selectedInputData = this.inputDatas.find(f => f.type == 'text') as InputData
+
+		this.dragulaService.createGroup("inner", {
+			revertOnSpill: true, // If you drag an element to the outside of the row and end the drag, it reverts the element to the row.
+		});
+
+		this.dragulaService.createGroup("outer", {
+			revertOnSpill: true,
+			moves: (el, container, handle) => {
+				return !handle ? false : handle.className.includes('handle');
+			}
+		});
+	  
+		this.dragulaService.dropModel("inner").subscribe(args => {
+			// If we dragged the last element of the row, we add an empty element to the row.
+			if(args.sourceModel.length < 1) args.sourceModel.push({})
+		});
 	}
 
 	ngDoCheck(): void {
-		this.formatHtmlData();
+		//this.formatHtmlData();
 	}
 
 	addElementToRow(rowIndex: number){

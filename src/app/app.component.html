@@ -1,57 +1,75 @@
 <main>
 	<section id="forms">
 		<h2 class="header">Angular Forms Generator</h2>
-		<p class="description">Generate angular reactive and template driven forms. Now supports bootstrap and angular material.</p>
+		<p class="description">Generate angular reactive and template driven forms. Now supports bootstrap and angular
+			material.</p>
 		<hr>
 		<div class="form-placement">
 			<h5 class="form-placement-title">Form Placement</h5>
-			<p class="form-placement-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, enim nesciunt numquam voluptatum sit nemo ea debitis unde magni quas nobis totam obcaecati cum minus assumenda eveniet voluptatem officiis illo.</p>
-			<div class="form-elements-grid-area">
+			<p class="form-placement-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, enim
+				nesciunt numquam voluptatum sit nemo ea debitis unde magni quas nobis totam obcaecati cum minus
+				assumenda eveniet voluptatem officiis illo.</p>
+			<div class="form-elements-area">
 				<div class="wrapper">
-					<div class="row-area">
-						<div class="row" *ngFor="let elements of formPlacementData; let rowIndex = index">
-							<div class="form-element" *ngFor="let element of elements; let elemIndex = index">
-								<ng-container *ngIf="element.icon">
-									<div class="hide-on-hover">
-										<i [ngClass]="element.icon + ' mr-2'"></i>
-										<span>{{element.name}}</span>
-									</div>
-								</ng-container>
-								<ng-container *ngIf="!element.icon">
-									<div class="hide-on-hover">
-										<span>Empty Element</span>
-									</div>
-								</ng-container>
-								<div class="element-action-buttons show-on-hover">
-									<button class="btn-sm btn-danger btn mr-2" (click)="removeElement(rowIndex, elemIndex)"><i class="fas fa-trash"></i></button>
-									<button class="btn-sm btn-secondary btn" *ngIf="element.icon" (click)="editElement(rowIndex, elemIndex)"><i class="fas fa-pen"></i></button>
-									<div class="btn-group dropright" *ngIf="!element.icon">
-										<button type="button" class="btn btn-secondary btn-sm" data-toggle="dropdown" aria-expanded="false">
-											<i class="fas fa-plus"></i>
-										</button>
-										<div class="dropdown-menu dropdown-multicol">
-											<ng-container *ngFor="let iData of inputDatas; let index = index">
-												<div class="dropdown-col" *ngIf="index % 3 == 0">
-													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
-												</div>
-												<div class="dropdown-col" *ngIf="(index - 1) % 3 == 0">
-													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
-												</div>
-												<div class="dropdown-col" *ngIf="(index - 2) % 3 == 0">
-													<button class="dropdown-item" type="button" (click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
-												</div>
-											</ng-container>
+					<div class="row-area" dragula="outer" [(dragulaModel)]="formPlacementData">
+						<div class="row-wrapper" *ngFor="let elements of formPlacementData; let rowIndex = index">
+							<div class="handle">
+							</div>
+							<div class="row" dragula="inner" [(dragulaModel)]="formPlacementData[rowIndex]">
+								<div class="form-element" *ngFor="let element of elements; let elemIndex = index">
+									<ng-container *ngIf="element.icon">
+										<div class="hide-on-hover">
+											<i [ngClass]="element.icon + ' mr-2'"></i>
+											<span>{{element.name}}</span>
 										</div>
+									</ng-container>
+									<ng-container *ngIf="!element.icon">
+										<div class="hide-on-hover">
+											<span>Empty Element</span>
+										</div>
+									</ng-container>
+									<div class="element-action-buttons show-on-hover">
+										<button class="btn-sm btn-danger btn mr-2"
+											(click)="removeElement(rowIndex, elemIndex)"><i
+												class="fas fa-trash"></i></button>
+										<button class="btn-sm btn-secondary btn" *ngIf="element.icon"
+											(click)="editElement(rowIndex, elemIndex)"><i
+												class="fas fa-pen"></i></button>
+										<div class="btn-group dropright" *ngIf="!element.icon">
+											<button type="button" class="btn btn-secondary btn-sm"
+												data-toggle="dropdown" aria-expanded="false">
+												<i class="fas fa-plus"></i>
+											</button>
+											<div class="dropdown-menu dropdown-multicol">
+												<ng-container *ngFor="let iData of inputDatas; let index = index">
+													<div class="dropdown-col" *ngIf="index % 3 == 0">
+														<button class="dropdown-item" type="button"
+															(click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+													</div>
+													<div class="dropdown-col" *ngIf="(index - 1) % 3 == 0">
+														<button class="dropdown-item" type="button"
+															(click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+													</div>
+													<div class="dropdown-col" *ngIf="(index - 2) % 3 == 0">
+														<button class="dropdown-item" type="button"
+															(click)="addElement(rowIndex, elemIndex, iData.type)">{{iData.name}}</button>
+													</div>
+												</ng-container>
+											</div>
+										</div>
+
 									</div>
-									  
 								</div>
 							</div>
+
 						</div>
+
 					</div>
 					<div class="buttons">
-						<button *ngFor="let elements of formPlacementData; let rowIndex = index" (click)="addElementToRow(rowIndex)" class="btn btn-primary">
+						<button *ngFor="let elements of formPlacementData; let rowIndex = index"
+							(click)="addElementToRow(rowIndex)" class="btn btn-primary">
 							<i class="fas fa-plus"></i>
-						</button>	
+						</button>
 					</div>
 				</div>
 			</div>
@@ -148,24 +166,27 @@
 
 	<section id="preview">
 		<h2 class="header">Form Preview</h2>
-		<p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, enim nesciunt numquam voluptatum sit nemo ea debitis unde magni.</p>
+		<p class="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, enim nesciunt numquam
+			voluptatum sit nemo ea debitis unde magni.</p>
 		<hr>
 		<div class="css-framework">
 			<div class="form-group">
 				<label for="formModelSelection">Select CSS Framework</label>
 				<br>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="pureCss" id="pureCss" value="pureCss">
+					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="pureCss" id="pureCss"
+						value="pureCss">
 					<label class="form-check-label" for="pureCss">Pure CSS</label>
 				</div>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="bootstrap" id="bootstrap" value="bootstrap">
+					<input class="form-check-input" [(ngModel)]="cssFramework" type="radio" name="bootstrap"
+						id="bootstrap" value="bootstrap">
 					<label class="form-check-label" for="bootstrap">Bootstrap</label>
 				</div>
 			</div>
 		</div>
 		<div class="container bg-light p-3" style="border-radius: 5px;">
-			<div [innerHTML]="htmlOutput | sanitizeHtml"></div>
+			asdasd
 		</div>
 	</section>
 </main>

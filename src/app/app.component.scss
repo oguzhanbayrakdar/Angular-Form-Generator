@@ -42,7 +42,7 @@ main{
 		}
 	}
 
-	.form-elements-grid-area{
+	.form-elements-area{
 		display: flex;
 		flex-direction: column;
 		text-align: center;
@@ -50,11 +50,34 @@ main{
 		
 		.wrapper{
 			display: flex;
+		
+			// Row height variable 
+			$rowHeight: 40px;
 			
+			.row-wrapper{
+				display: flex;
+				flex-direction: row;
+
+				.handle{
+					width: 25px;
+					padding-left: 7px;
+					padding-top: 3px;
+					height: calc($rowHeight - 3px); // 3px is padding-top
+					background-color: whitesmoke;
+					margin-right: 10px;
+					border-radius: 3px;
+				}
+				.handle::after{
+					content: '\2807';
+					font-size: 25px;
+				}
+			}
+
 			.row-area{
 				flex: 1;
 
 				.row{
+					flex:1;
 					margin: 0;
 					justify-content: space-between;
 					color: white;
@@ -66,10 +89,11 @@ main{
 						align-items: center;
 						justify-content: center;
 						flex: 1;
-						height: 40px;
+						height: $rowHeight;
 						border-radius: 5px;
 						border: 2px dashed #cecece;
 						margin-right: 6px;
+						user-select: none;
 
 						:last-of-type{
 							margin: 0;
@@ -101,7 +125,7 @@ main{
 				width: 50px;
 
 				button{
-					height: 40px;
+					height: $rowHeight;
 					margin-bottom: 5px;
 				}
 			}
